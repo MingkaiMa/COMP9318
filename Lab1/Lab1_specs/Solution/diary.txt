@@ -12,6 +12,13 @@ https://www.geeksforgeeks.org/square-root-of-an-integer/
 
 Solu for Q2:
 
-create Q2_v1.py
+created Q2_v1.py
 https://en.wikipedia.org/wiki/Newton%27s_method#Solution_of_cos_x_=_x3
+
+
+Solu for Q3:
+created Q3_v1.py and Q3_v1_Test.py
+
+Submission:
+created submission_v1.py
 
