@@ -1,0 +1,4 @@
+06-03-2018
+created Q1.py and Q1_v2.py
+Both of them using binary search, so time complexity is O(log(x)),
+But Q1_v2.py is slightly faster.
