@@ -2,3 +2,7 @@
 created Q1.py and Q1_v2.py
 Both of them using binary search, so time complexity is O(log(x)),
 But Q1_v2.py is slightly faster.
+Reference:
+http://blog.csdn.net/zmazon/article/details/8217866
+https://www.geeksforgeeks.org/square-root-of-an-integer/
+
