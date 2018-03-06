@@ -1,8 +1,17 @@
 06-03-2018
+
+Solu for Q1:
+
 created Q1.py and Q1_v2.py
 Both of them using binary search, so time complexity is O(log(x)),
 But Q1_v2.py is slightly faster.
 Reference:
 http://blog.csdn.net/zmazon/article/details/8217866
 https://www.geeksforgeeks.org/square-root-of-an-integer/
+
+
+Solu for Q2:
+
+create Q2_v1.py
+https://en.wikipedia.org/wiki/Newton%27s_method#Solution_of_cos_x_=_x3
 
