@@ -129,18 +129,20 @@ def v_opt_dp(x, num_bins):# do not change the heading of the function
     
     matrix = [[-1] * len(x) for _ in range(b)]
     matrixPath = [[None] * len(x) for _ in range(b)]
-    
+
+    #return matrix, [[3, 1], [18], [11, 13], [17]]
+
     rightmost = len(x) - 1
     
     for i in range(b):
-        for j in range(rightmost - i, rightmost - i - b + 1, -1):
+        for j in range(rightmost - i, 0 + b - 2 - i, -1):
 
             if j == rightmost - i:
                 matrix[i][j] = 0
 
                 temp_l = []
                 for jj in range(j, rightmost + 1):
-                    temp_l += [x[jj]]
+                    temp_l.append([x[jj]])
 
                 matrixPath[i][j] = temp_l
                 continue
@@ -169,8 +171,12 @@ def v_opt_dp(x, num_bins):# do not change the heading of the function
 
 
             matrix[i][j] = minValue
+
             matrixPath[i][j] = [x[j: targetK + 1]] + matrixPath[i - 1][targetK + 1]
 
+
+    for i in matrixPath:
+        print(i)
 
     lastLine = matrixPath[b - 1]
     resL = []
