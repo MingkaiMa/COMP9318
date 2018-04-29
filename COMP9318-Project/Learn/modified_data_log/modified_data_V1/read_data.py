@@ -95,12 +95,6 @@ word_list_class_0_1 = []
 for word in dic_class_0_1:
     word_list_class_0_1.append(word)
 
-
-word_list_test = []
-for word in dic_test:
-    word_list_test.append(word)
-    
-
 train_data_matrix = []
 
 for sample in class_all:
@@ -166,7 +160,6 @@ support_vectors_index_for_class_1 = clf.support_[sv_index_class_0: ]
 
 for test_instance in test_data_matrix:
     test_distance_to_class_0_sv = euclidean_distances([test_instance], support_vectors_for_class_0)
-    test_distance_to_class_1_sv = euclidean_distances([test_instance], support_vectors_for_class_1)
     #print(np.min(test_distance_to_class_0_sv))
     
     #print(np.argmin(test_distance_to_class_0_sv))
@@ -179,125 +172,156 @@ for test_instance in test_data_matrix:
 
     #sys.exit()
 
-    min_index2 = np.argmin(test_distance_to_class_1_sv)
-    target_train_instance_index_2 = support_vectors_index_for_class_1[min_index2]
-    target_train_instance_2 = train_data_matrix[target_train_instance_index_2]
-
- #   sys.exit()
-
     change_count = 0
     
     for i in range(len(test_instance)):
-
-        if change_count == 20:
+        if change_count > 20:
             break
-
         
         if test_instance[i] != target_train_instance[i]:
 
-
-            # not a modification
-            if test_instance[i] != 0 and target_train_instance[i] != 0:
-                #
-                # previous value and decision distance
-                save_value = test_instance[i]
-                previous_dd = clf.decision_function([test_instance])
-                
-                # now change
-                test_instance[i] = target_train_instance[i]
-
-                # compare
-
-                now_dd = clf.decision_function([test_instance])
-
-                if now_dd < previous_dd:
-                    continue
-
-                else:
-                    test_instance[i] = save_value
-
+            # save previous decision distance
+            previous_dd = clf.decision_function([test_instance])
+            
             #
-            # deletion
-            elif test_instance[i] != 0 and target_train_instance[i] == 0:
-                #
-                # previous value and decision distance
-                save_value = test_instance[i]
-                previous_dd = clf.decision_function([test_instance])
+            # save test_instance[i]
+            
 
-                # now change
-                test_instance[i] = 0
+            save_value = test_instance[i]
 
-                # compare
-                now_dd = clf.decision_function([test_instance])
 
-                if now_dd < previous_dd:
-                    change_count += 1
-                    print(word_list_class_0_1[i], ' delete')
-                    continue
-                else:
-                    test_instance[i] = save_value
+            if test_instance[i] < target_train_instance[i]:
+                to_add_value = min(20 - change_count, target_train_instance[i] - test_instance[i])
+                test_instance[i] += to_add_value
 
-            #
-            # addition
-            elif test_instance[i] == 0 and target_train_instance[i] != 0:
-                #
-                # previous value and decision distance
-                save_value = test_instance[i]
-                previous_dd = clf.decision_function([test_instance])
+            else:
+                to_add_value = min(20 - change_count, test_instance[i] - target_train_instance[i])
+                test_instance[i] -= to_add_value
 
-                # now change
-                test_instance[i] = target_train_instance[i]
+            now_dd = clf.decision_function([test_instance])
 
-                # compare
-                now_dd = clf.decision_function([test_instance])
-
-                if now_dd < previous_dd:
-                    change_count += 1
-                    print(word_list_class_0_1[i], ' add')
-                    continue
-                else:
-                    test_instance[i] = save_value
-
-            #
-            # no modification
-            elif test_instance[i] == 0 and target_train_instance[i] == 0:
+            # decrease the dd
+            if now_dd < previous_dd:
+                change_count += to_add_value
                 continue
 
-
-
-
-
+            else:
+                test_instance[i] = save_value
+            
                 
 
             
-words_in_test_not_in_train = set(word_list_test) - set(word_list_class_0_1)
 
 print(clf.score(test_data_matrix, y_test))
 
-print(clf.predict(test_data_matrix))
 
 modified_data = 'modified_data.txt'
 
-    
 with open(modified_data, 'a') as f:
-    for i in range(len(test)):
-        words_in_original = test[i]
-        words_in_training = word_list_class_0_1
-        words_all = set(words_in_original) | set(words_in_training)
-        
-        modified_test_instance = test_data_matrix[i]
+    for modified_test_instance in test_data_matrix:
+        for i in range(len(modified_test_instance)):
+            if modified_test_instance[i] == 0:
+                continue
 
-        for word in words_all:
-            if word not in words_in_training:
-                f.write(f'{word} ')
-            else:
-                word_index = word_list_class_0_1.index(word)
-
-                if modified_test_instance[word_index] == 0:
-                    continue
-
-                f.write(f'{word} ' * modified_test_instance[word_index])
+            f.write(f'{word_list_class_0_1[i]} ' * modified_test_instance[i])
 
         f.write('\n')
+    
+    
 
+
+
+
+
+
+
+
+
+##    print()
+##    
+##    print()
+##    break
+
+
+## coef0 = 12
+##for c in range(1,20):
+##    clf = svm.SVC(kernel = 'poly', coef0 = c)
+##    clf.fit(train_data_matrix, y_train)
+##
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+
+
+##C parameter
+## C = 10 ** 2
+##for c in range(-5, 15):
+##    clf = svm.SVC(kernel = 'poly', C = 2 ** c, coef0 = 12)
+##    clf.fit(train_data_matrix, y_train)
+##    print(f'c is: {c} C is : {2 ** c}')
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+##
+
+##degree parameter
+## best between degree = 2,3,4
+## after 5 , decrease
+
+##for d in range(1, 30):
+##    clf = svm.SVC(kernel = 'poly', C = 10 ** 2, coef0 = 12, degree = d)
+##    clf.fit(train_data_matrix, y_train)
+##
+##    print(f'degree is {d}')
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+
+
+##degree gamma
+## gamma best between: 0.0001
+
+##ini = 0.00017488632388947185
+##g__L = [i * (-0.00001) + ini for i in range(1, 15)]
+##g_L = [i * 0.0001 + ini for i in range(1, 15)]
+##gL = g__L + g_L
+##
+##for g in range(-15, 5):
+##    
+##    clf = svm.SVC(kernel = 'poly', C = 10 ** 2, coef0 = 12, degree = 3, gamma = 2 ** g)
+##    clf.fit(train_data_matrix, y_train)
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+##    print()
+
+
+
+
+##sv_class_0 = clf.n_support_[0]
+##sv_class_1 = clf.n_support_[1]
+##
+##support_vector_for_class_0 = clf.support_vectors_[: sv_class_0]
+##support_vector_for_class_1 = clf.support_vectors_[sv_class_0: ]
+##
+##for instance in test_data_matrix:
+##    minDistance = float('inf')
+##    minInstance = []
+##    for class0instance in support_vector_for_class_0:
+##        distance = euclidean_distances([instance], [class0instance])
+##        if(distance > minDistance):
+##            minDistance = distance
+##            minInstance = class0instance
+
+    
+        
+    
+    
+
+
+
+
+
+##print(clf)
+##
+###clf.fit(train_data_matrix, y_train)
+##
+###clf.fit(train_data_matrix_class_0, y_train_class_0)
 

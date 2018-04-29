@@ -267,6 +267,9 @@ for test_instance in test_data_matrix:
 
 
 
+##    print(change_count)
+##    break
+            
                 
 
             
@@ -278,6 +281,18 @@ print(clf.predict(test_data_matrix))
 
 modified_data = 'modified_data.txt'
 
+##with open(modified_data, 'a') as f:
+##    for word in words_in_test_not_in_train:
+##        f.write(f'{word}: ')
+##    for modified_test_instance in test_data_matrix:
+##        for i in range(len(modified_test_instance)):
+##            if modified_test_instance[i] == 0:
+##                continue
+##
+##            f.write(f'{word_list_class_0_1[i]} ' * modified_test_instance[i])
+##
+##        f.write('\n')
+    
     
 with open(modified_data, 'a') as f:
     for i in range(len(test)):
@@ -300,4 +315,101 @@ with open(modified_data, 'a') as f:
 
         f.write('\n')
 
+        
+            
+
+
+
+
+
+
+
+
+##    print()
+##    
+##    print()
+##    break
+
+
+## coef0 = 12
+##for c in range(1,20):
+##    clf = svm.SVC(kernel = 'poly', coef0 = c)
+##    clf.fit(train_data_matrix, y_train)
+##
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+
+
+##C parameter
+## C = 10 ** 2
+##for c in range(-5, 15):
+##    clf = svm.SVC(kernel = 'poly', C = 2 ** c, coef0 = 12)
+##    clf.fit(train_data_matrix, y_train)
+##    print(f'c is: {c} C is : {2 ** c}')
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+##
+
+##degree parameter
+## best between degree = 2,3,4
+## after 5 , decrease
+
+##for d in range(1, 30):
+##    clf = svm.SVC(kernel = 'poly', C = 10 ** 2, coef0 = 12, degree = d)
+##    clf.fit(train_data_matrix, y_train)
+##
+##    print(f'degree is {d}')
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+
+
+##degree gamma
+## gamma best between: 0.0001
+
+##ini = 0.00017488632388947185
+##g__L = [i * (-0.00001) + ini for i in range(1, 15)]
+##g_L = [i * 0.0001 + ini for i in range(1, 15)]
+##gL = g__L + g_L
+##
+##for g in range(-15, 5):
+##    
+##    clf = svm.SVC(kernel = 'poly', C = 10 ** 2, coef0 = 12, degree = 3, gamma = 2 ** g)
+##    clf.fit(train_data_matrix, y_train)
+##    print('train: ', clf.score(train_data_matrix, y_train))
+##    print('test:  ', clf.score(test_data_matrix,  y_test))
+##    print()
+
+
+
+
+##sv_class_0 = clf.n_support_[0]
+##sv_class_1 = clf.n_support_[1]
+##
+##support_vector_for_class_0 = clf.support_vectors_[: sv_class_0]
+##support_vector_for_class_1 = clf.support_vectors_[sv_class_0: ]
+##
+##for instance in test_data_matrix:
+##    minDistance = float('inf')
+##    minInstance = []
+##    for class0instance in support_vector_for_class_0:
+##        distance = euclidean_distances([instance], [class0instance])
+##        if(distance > minDistance):
+##            minDistance = distance
+##            minInstance = class0instance
+
+    
+        
+    
+    
+
+
+
+
+
+##print(clf)
+##
+###clf.fit(train_data_matrix, y_train)
+##
+###clf.fit(train_data_matrix_class_0, y_train_class_0)
 

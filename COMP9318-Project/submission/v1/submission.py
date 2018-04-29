@@ -184,27 +184,7 @@ def fool_classifier(test_data): ## Please do not change the function defination.
         for i in range(len(test_instance)):
 
             if change_count == 20:
-
-
-                if test_instance[i] != 0 and target_train_instance[i] != 0:
-                    #
-                    # previous value and decision distance
-                    save_value = test_instance[i]
-                    previous_dd = clf.decision_function([test_instance])
-                    
-                    # now change
-                    test_instance[i] = target_train_instance[i]
-
-                    # compare
-
-                    now_dd = clf.decision_function([test_instance])
-
-                    if now_dd < previous_dd:
-                        continue
-
-                    else:
-                        test_instance[i] = save_value
-                continue
+                break
 
             
             if test_instance[i] != target_train_instance[i]:

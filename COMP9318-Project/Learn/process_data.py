@@ -1,7 +1,7 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn import svm
-
+import sys
 class0_file = '../class-0.txt'
 class1_file = '../class-1.txt'
 test_file = '../test_data.txt'
@@ -24,19 +24,19 @@ class_0 = [' '.join(i) for i in class_0]
 class_1 = [' '.join(i) for i in class_1]
 test = [' '.join(i) for i in test]
 
-vectorizer = CountVectorizer(lowercase = False,
-                            stop_words = None)
+vectorizer = CountVectorizer(stop_words = 'english')
 
 
 ##X = vectorizer.fit_transform(class_0 + class_1 + test)
 
 train_data = vectorizer.fit_transform(class_0 + class_1)
-tfidf_transformer = TfidfTransformer()
-train_data_tfidf = tfidf_transformer.fit_transform(train_data)
 
-
+##tfidf_transformer = TfidfTransformer()
+##train_data_tfidf = tfidf_transformer.fit_transform(train_data)
+##
+##
 test_data = vectorizer.transform(test)
-test_data_tfidf = tfidf_transformer.transform(test_data)
+##test_data_tfidf = tfidf_transformer.transform(test_data)
 
 
 ##
@@ -51,7 +51,7 @@ y = y0 + y1
 ####
 
 clf = svm.SVC()
-clf.fit(train_data_tfidf, y)
+clf.fit(train_data, y)
 ####
 ####
 ##
