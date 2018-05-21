@@ -3,9 +3,9 @@ from sklearn.metrics.pairwise import euclidean_distances
 import numpy as np
 import sys
 
-class0_file = '../class-0.txt'
-class1_file = '../class-1.txt'
-test_file = '../test_data.txt'
+class0_file = '../../../class-0.txt'
+class1_file = '../../../class-1.txt'
+test_file = '../../../test_data.txt'
 
 ##class0_file = '../mydata/0.txt'
 ##class1_file = '../mydata/1.txt'
@@ -142,10 +142,11 @@ y_train = np.array(y_train)
 y_test = [1] * 200
 y_test = np.array(y_test)
 
+
 ## Select best parameters:
 clf = svm.SVC(kernel = 'poly', C = 10 ** 2, coef0 = 12, degree = 3, gamma = 0.0001)
 clf.fit(train_data_matrix, y_train)
-
+sys.exit()
 sv_index_class_0 = clf.n_support_[0]
 sv_index_class_1 = clf.n_support_[1]
 

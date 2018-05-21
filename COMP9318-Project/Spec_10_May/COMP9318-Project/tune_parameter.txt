@@ -1,0 +1,6 @@
+kernel:
+linear and poly have the best performance.
+
+For linear:
+only C parameter has influence,
+when C >= 2 ** -5, train accuracy is 1.0  test accuracy is 0.49
